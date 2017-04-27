@@ -2,6 +2,7 @@ import os
 import sys
 import numpy as np
 import h5py
+from six.moves.urllib.request import urlretrieve
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(BASE_DIR)
 
@@ -10,7 +11,12 @@ DATA_DIR = os.path.join(BASE_DIR, 'data')
 if not os.path.exists(DATA_DIR):
     os.mkdir(DATA_DIR)
 if not os.path.exists(os.path.join(DATA_DIR, 'modelnet40_ply_hdf5_2048')):
+
+    # TODO:
+    # all of this only works for linux
+    
     www = 'https://shapenet.cs.stanford.edu/media/modelnet40_ply_hdf5_2048.zip'
+    urlretrieve(www)
     zipfile = os.path.basename(www)
     os.system('wget %s; unzip %s' % (www, zipfile))
     os.system('mv %s %s' % (zipfile[:-4], DATA_DIR))
@@ -39,7 +45,7 @@ def rotate_point_cloud(batch_data):
           BxNx3 array, rotated batch of point clouds
     """
     rotated_data = np.zeros(batch_data.shape, dtype=np.float32)
-    for k in xrange(batch_data.shape[0]):
+    for k in range(batch_data.shape[0]):
         rotation_angle = np.random.uniform() * 2 * np.pi
         cosval = np.cos(rotation_angle)
         sinval = np.sin(rotation_angle)
@@ -59,7 +65,7 @@ def rotate_point_cloud_by_angle(batch_data, rotation_angle):
           BxNx3 array, rotated batch of point clouds
     """
     rotated_data = np.zeros(batch_data.shape, dtype=np.float32)
-    for k in xrange(batch_data.shape[0]):
+    for k in range(batch_data.shape[0]):
         #rotation_angle = np.random.uniform() * 2 * np.pi
         cosval = np.cos(rotation_angle)
         sinval = np.sin(rotation_angle)

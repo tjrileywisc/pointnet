@@ -1,3 +1,4 @@
+from __future__ import print_function
 import tensorflow as tf
 import numpy as np
 import argparse
@@ -101,11 +102,11 @@ def eval_one_epoch(sess, ops, num_votes=1, topk=1):
         current_data, current_label = provider.loadDataFile(TEST_FILES[fn])
         current_data = current_data[:,0:NUM_POINT,:]
         current_label = np.squeeze(current_label)
-        print current_data.shape
+        print(current_data.shape)
         
         file_size = current_data.shape[0]
         num_batches = file_size / BATCH_SIZE
-        print file_size
+        print(file_size)
         
         for batch_idx in range(num_batches):
             start_idx = batch_idx * BATCH_SIZE

@@ -1,0 +1,6 @@
+
+# ignore dirs
+log/
+data/
+__pycache__/
+dump/
